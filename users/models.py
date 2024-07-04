@@ -1,13 +1,17 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser 
+from django.contrib.auth.models import AbstractUser
+from rest_framework_simplejwt.tokens import RefreshToken
+
 
 class User(AbstractUser):
-    profile_image = models.ImageField(upload_to='profile_photos', height_field=None, width_field=None, max_length=None)
-    post = models.CharField(max_length=50, default=True)
-
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    email = models.EmailField(max_length=255, unique=True, db_index=True)
 
     def __str__(self):
         return self.username
-    
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
