@@ -1,0 +1,10 @@
+/* login */
+.login{
+    height: 80vh;
+  }
+  .login .logo{
+    margin-bottom: -40px;
+  }
+  .login form .btn{
+    width: 100%;
+  }
